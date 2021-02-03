@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 // import './App.css';
 import { useState } from 'react';
+import Guest from './guest';
 import { app, c1, cg } from './style';
 
 const createGuest = (firstName, lastName) => {
@@ -36,7 +37,12 @@ function App() {
           ></input>
           <button
             onClick={() => {
-              createGuest(firstName, lastName);
+              // createGuest(firstName, lastName);
+              document
+                .getElementsByClassName('guestCon')
+                .appendChild(
+                  <Guest firstName={firstName} lastName={lastName}></Guest>,
+                );
               document.querySelector('.FN').value = '';
               document.querySelector('.LN').value = '';
             }}
