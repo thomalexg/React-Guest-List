@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 // import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Guest from './Guest';
 import { app, c1, cg } from './style';
 
@@ -8,6 +8,7 @@ function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [guest, setGuest] = useState([]);
+  const [clicked, setClicked] = useState(true);
 
   async function upload(firstName, lastName) {
     const response = await fetch('http://localhost:5000', {
@@ -19,11 +20,17 @@ function App() {
     });
     const createdGuest = await response.json();
   }
-  async function download() {
-    const response = await fetch('http://localhost:5000');
-    const allGuests = await response.json();
-    setGuest(allGuests);
-  }
+  useEffect(() => {
+    const download = async () => {
+      const response = await fetch('http://localhost:5000');
+      const allGuests = await response.json();
+      setGuest(allGuests);
+      setClicked(false);
+    };
+    if (clicked) {
+      download();
+    }
+  }, [clicked]);
 
   return (
     <div className="App" css={app}>
@@ -56,7 +63,7 @@ function App() {
         <button
           onClick={async () => {
             setGuest([]);
-            download();
+            setClicked(true);
           }}
         >
           Download guest list
