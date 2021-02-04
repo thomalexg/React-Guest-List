@@ -1,23 +1,13 @@
 /** @jsxImportSource @emotion/react */
 // import './App.css';
 import { useState } from 'react';
-import Guest from './guest';
+import Guest from './Guest';
 import { app, c1, cg } from './style';
 
-const createGuest = (firstName, lastName) => {
-  const parent = document.querySelector('.guestCon');
-  let markup = `<div class="guest">
-  <div class="guest-con">
-    <input type="checkbox"></input>
-    <p>${firstName} ${lastName}</p>
-    <i class="fas fa-trash-alt"></i>
-  </div>
-</div>`;
-  return (parent.innerHTML += markup);
-};
 function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [guest, setGuest] = useState([]);
 
   return (
     <div className="App" css={app}>
@@ -28,38 +18,43 @@ function App() {
             type="text"
             placeholder="First Name"
             onChange={(e) => setFirstName(e.target.value)}
-          ></input>
+          />
           <input
             className="LN"
             type="text"
             placeholder="Last Name"
             onChange={(e) => setLastName(e.target.value)}
-          ></input>
+          />
           <button
             onClick={() => {
-              // createGuest(firstName, lastName);
-              document
-                .getElementsByClassName('guestCon')
-                .appendChild(
-                  <Guest firstName={firstName} lastName={lastName}></Guest>,
-                );
-              document.querySelector('.FN').value = '';
-              document.querySelector('.LN').value = '';
+              setGuest(
+                guest.concat({ firstName: firstName, lastName: lastName }),
+              );
+              const response = await fetch('http://localhost:5000', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ firstName: firstName, lastName: lastName }),
+              });
+              const createdGuest = await response.json()
             }}
           >
             Add Guest
           </button>
         </div>
+
+        <button>Download guest list</button>
       </div>
       <div className="guestCon" css={cg}>
-        {/* <div className="guest">
-          <div className="guest-con">
-            <input type="checkbox"></input>
-            <p>{firstName + ' ' + lastName}</p>
-            <i class="fas fa-trash-alt"></i>
-          </div>
-        </div> */}
-        {/* <Guest firstName={firstName} lastName={lastName}></Guest> */}
+        {guest.map((elem, index) => (
+          <Guest
+            firstName={elem.firstName}
+            lastName={elem.lastName}
+            key={index}
+            id={index}
+          />
+        ))}
       </div>
     </div>
   );
