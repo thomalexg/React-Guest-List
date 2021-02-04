@@ -4,7 +4,13 @@ export default function Guest(props) {
       <div className="guest-con">
         <input type="checkbox"></input>
         <p>{props.firstName + ' ' + props.lastName}</p>
-        <i class="fas fa-trash-alt"></i>
+        <button
+          onClick={() => {
+            props.guestaway(props.id);
+          }}
+        >
+          <i class="fas fa-trash-alt"></i>
+        </button>
       </div>
     </div>
   );

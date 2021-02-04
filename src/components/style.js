@@ -55,6 +55,11 @@ const cg = css`
     display: inline;
     padding: 10px 5px 0;
   }
+  button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+  }
 `;
 
 export { cg, c1, app };

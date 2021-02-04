@@ -5,6 +5,7 @@ import Guest from './Guest';
 import { app, c1, cg } from './style';
 
 function App() {
+  let counter = 1;
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [guest, setGuest] = useState([]);
@@ -20,10 +21,18 @@ function App() {
     });
     const createdGuest = await response.json();
   }
+  async function guestaway(id) {
+    const response = await fetch(`http://localhost:5000/${id}`, {
+      method: 'DELETE',
+    });
+    const deletedGuest = await response.json();
+    setClicked(true);
+  }
   useEffect(() => {
     const download = async () => {
       const response = await fetch('http://localhost:5000');
       const allGuests = await response.json();
+      console.log(allGuests);
       setGuest(allGuests);
       setClicked(false);
     };
@@ -49,11 +58,12 @@ function App() {
             onChange={(e) => setLastName(e.target.value)}
           />
           <button
-            onClick={() => {
-              setGuest(
-                guest.concat({ firstName: firstName, lastName: lastName }),
-              );
-              upload(firstName, lastName);
+            onClick={async () => {
+              // setGuest(
+              //   guest.concat({ firstName: firstName, lastName: lastName }),
+              // );
+              await upload(firstName, lastName);
+              setClicked(true);
             }}
           >
             Add Guest
@@ -62,20 +72,31 @@ function App() {
 
         <button
           onClick={async () => {
-            setGuest([]);
+            // setGuest([]);
             setClicked(true);
           }}
         >
           Download guest list
         </button>
       </div>
-      <div className="guestCon" css={cg}>
+      <div
+        className="guestCon"
+        css={cg}
+        // onClick={(e) =>
+        //   e.target.className === 'fas fa-trash-alt'
+        //     ? console.log('Yeah')
+        //     : log('nah')
+        // }
+      >
         {guest.map((elem, index) => (
           <Guest
             firstName={elem.firstName}
             lastName={elem.lastName}
-            key={index}
-            id={index}
+            key={elem.id}
+            id={elem.id}
+            guestaway={guestaway}
+            setClicked={setClicked}
+            setGuest={setGuest}
           />
         ))}
       </div>
