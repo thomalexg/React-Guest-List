@@ -78,11 +78,14 @@ function App() {
         </div>
 
         <button
-          onClick={async () => {
-            setClicked(true);
+          onClick={() => {
+            guest.forEach((elem, index) => {
+              guestaway(elem.id);
+            });
+            setGuest([]);
           }}
         >
-          Download guest list
+          Delete All
         </button>
       </div>
       <div className="guestCon" css={cg}>
