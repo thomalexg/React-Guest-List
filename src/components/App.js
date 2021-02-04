@@ -9,6 +9,22 @@ function App() {
   const [lastName, setLastName] = useState('');
   const [guest, setGuest] = useState([]);
 
+  async function upload(firstName, lastName) {
+    const response = await fetch('http://localhost:5000', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ firstName: firstName, lastName: lastName }),
+    });
+    const createdGuest = await response.json();
+  }
+  async function download() {
+    const response = await fetch('http://localhost:5000');
+    const allGuests = await response.json();
+    setGuest(allGuests);
+  }
+
   return (
     <div className="App" css={app}>
       <div className="container-header" css={c1}>
@@ -30,21 +46,21 @@ function App() {
               setGuest(
                 guest.concat({ firstName: firstName, lastName: lastName }),
               );
-              const response = await fetch('http://localhost:5000', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ firstName: firstName, lastName: lastName }),
-              });
-              const createdGuest = await response.json()
+              upload(firstName, lastName);
             }}
           >
             Add Guest
           </button>
         </div>
 
-        <button>Download guest list</button>
+        <button
+          onClick={async () => {
+            setGuest([]);
+            download();
+          }}
+        >
+          Download guest list
+        </button>
       </div>
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
