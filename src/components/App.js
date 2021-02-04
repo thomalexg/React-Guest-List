@@ -11,6 +11,16 @@ function App() {
   const [guest, setGuest] = useState([]);
   const [clicked, setClicked] = useState(true);
 
+  async function update(boolean, id) {
+    const response = await fetch(`http://localhost:5000/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ attending: boolean }),
+    });
+    const updatedGuest = await response.json();
+  }
   async function upload(firstName, lastName) {
     const response = await fetch('http://localhost:5000', {
       method: 'POST',
@@ -59,9 +69,6 @@ function App() {
           />
           <button
             onClick={async () => {
-              // setGuest(
-              //   guest.concat({ firstName: firstName, lastName: lastName }),
-              // );
               await upload(firstName, lastName);
               setClicked(true);
             }}
@@ -72,24 +79,16 @@ function App() {
 
         <button
           onClick={async () => {
-            // setGuest([]);
             setClicked(true);
           }}
         >
           Download guest list
         </button>
       </div>
-      <div
-        className="guestCon"
-        css={cg}
-        // onClick={(e) =>
-        //   e.target.className === 'fas fa-trash-alt'
-        //     ? console.log('Yeah')
-        //     : log('nah')
-        // }
-      >
+      <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
           <Guest
+            attending={elem.attending}
             firstName={elem.firstName}
             lastName={elem.lastName}
             key={elem.id}
@@ -97,6 +96,7 @@ function App() {
             guestaway={guestaway}
             setClicked={setClicked}
             setGuest={setGuest}
+            update={update}
           />
         ))}
       </div>
