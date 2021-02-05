@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */ import { css } from '@emotion/react';
 const color = '#fff';
 const app = css`
-  background-color: #00076f;
+  background-color: black;
   height: 100vh;
 `;
 

@@ -20,6 +20,7 @@ function App() {
       body: JSON.stringify({ attending: boolean }),
     });
     const updatedGuest = await response.json();
+    setClicked(true);
   }
   async function upload(firstName, lastName) {
     const response = await fetch('http://localhost:5000', {
@@ -42,9 +43,14 @@ function App() {
     const download = async () => {
       const response = await fetch('http://localhost:5000');
       const allGuests = await response.json();
-      console.log(allGuests);
+      // console.log(allGuests);
       setGuest(allGuests);
       setClicked(false);
+      // allGuests.forEach((elem) => {
+      //   if (elem.attending) {
+      //     return document.querySelector(`att${elem.id}`).checked;
+      //   }
+      // });
     };
     if (clicked) {
       download();
@@ -52,7 +58,7 @@ function App() {
   }, [clicked]);
 
   return (
-    <div className="App" css={app}>
+    <div className="App" css={app} style={{ backgroundColor: 'black' }}>
       <div className="container-header" css={c1}>
         <div className="header">
           <input
@@ -69,8 +75,14 @@ function App() {
           />
           <button
             onClick={async () => {
+              setFirstName(firstName ? firstName : ' ');
+              setLastName(lastName ? lastName : ' ');
               await upload(firstName, lastName);
               setClicked(true);
+              document.querySelector('.FN').value = '';
+              document.querySelector('.LN').value = '';
+              setFirstName('');
+              setLastName('');
             }}
           >
             Add Guest
@@ -87,6 +99,25 @@ function App() {
         >
           Delete All
         </button>
+        <span>Attending only</span>
+        <input
+          className="ao"
+          type="checkbox"
+          // onChange={(e) => {
+          //   setGuest([]);
+          //   if (e.target.checked) {
+          //     guest.forEach((elem) => {
+          //       if (elem.attending) {
+          //         setGuest(guest.concat(elem));
+          //       }
+          //     });
+          //   }
+          //   console.log(guest);
+          // }}
+        ></input>
+        <br />
+        <span>Not Attending only</span>
+        <input type="checkbox"></input>
       </div>
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
