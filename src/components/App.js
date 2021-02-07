@@ -12,6 +12,8 @@ function App() {
   const [clicked, setClicked] = useState(true);
   const [attendingFilter, setAttendingFilter] = useState(false);
   const [notAttendingFilter, setNotAttendingFilter] = useState(false);
+  const [attendingChecked, setAttendingChecked] = useState(false);
+  const [notAttendingChecked, setNotAttendingChecked] = useState(false);
 
   async function update(boolean, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
@@ -114,9 +116,15 @@ function App() {
         <input
           className="ao"
           type="checkbox"
+          checked={attendingChecked}
           onChange={(e) => {
+            attendingChecked
+              ? setAttendingChecked(false)
+              : setAttendingChecked(true);
             if (e.target.checked) {
               setAttendingFilter(true);
+              setNotAttendingChecked(false);
+              setNotAttendingFilter(false);
             } else {
               setAttendingFilter(false);
             }
@@ -128,9 +136,15 @@ function App() {
         </span>
         <input
           type="checkbox"
+          checked={notAttendingChecked}
           onChange={(e) => {
+            notAttendingChecked
+              ? setNotAttendingChecked(false)
+              : setNotAttendingChecked(true);
             if (e.target.checked) {
               setNotAttendingFilter(true);
+              setAttendingChecked(false);
+              setAttendingFilter(false);
             } else {
               setNotAttendingFilter(false);
             }
