@@ -3,11 +3,14 @@ export default function Guest(props) {
     <div
       className={`guest ${props.id}`}
       id={props.id}
-      // style={`{ display: ${
-      //   () => {
-      //     if
-      //   }
-      // } }`}
+      style={{
+        display:
+          !props.attending && props.attendingFilter
+            ? 'none'
+            : '' || (props.attending && props.notAttendingFilter)
+            ? 'none'
+            : '',
+      }}
     >
       <div className="guest-con">
         <input

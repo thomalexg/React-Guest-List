@@ -10,6 +10,8 @@ function App() {
   const [lastName, setLastName] = useState('');
   const [guest, setGuest] = useState([]);
   const [clicked, setClicked] = useState(true);
+  const [attendingFilter, setAttendingFilter] = useState(false);
+  const [notAttendingFilter, setNotAttendingFilter] = useState(false);
 
   async function update(boolean, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
@@ -57,6 +59,13 @@ function App() {
     }
   }, [clicked]);
 
+  const filterAttending = (boolean) => {
+    guest.forEach((guest) => {
+      if (boolean && !guest.attending) {
+      }
+    });
+  };
+
   return (
     <div className="App" css={app} style={{ backgroundColor: 'black' }}>
       <div className="container-header" css={c1}>
@@ -99,25 +108,34 @@ function App() {
         >
           Delete All
         </button>
-        <span>Attending only</span>
+        <span style={{ color: 'white', padding: '10px 0 10px 10px' }}>
+          Attending only
+        </span>
         <input
           className="ao"
           type="checkbox"
-          // onChange={(e) => {
-          //   setGuest([]);
-          //   if (e.target.checked) {
-          //     guest.forEach((elem) => {
-          //       if (elem.attending) {
-          //         setGuest(guest.concat(elem));
-          //       }
-          //     });
-          //   }
-          //   console.log(guest);
-          // }}
-        ></input>
+          onChange={(e) => {
+            if (e.target.checked) {
+              setAttendingFilter(true);
+            } else {
+              setAttendingFilter(false);
+            }
+          }}
+        />
         <br />
-        <span>Not Attending only</span>
-        <input type="checkbox"></input>
+        <span style={{ color: 'white', padding: '10px 0 10px 10px' }}>
+          Not Attending only
+        </span>
+        <input
+          type="checkbox"
+          onChange={(e) => {
+            if (e.target.checked) {
+              setNotAttendingFilter(true);
+            } else {
+              setNotAttendingFilter(false);
+            }
+          }}
+        />
       </div>
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
@@ -131,6 +149,8 @@ function App() {
             setClicked={setClicked}
             setGuest={setGuest}
             update={update}
+            attendingFilter={attendingFilter}
+            notAttendingFilter={notAttendingFilter}
           />
         ))}
       </div>
