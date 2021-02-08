@@ -169,6 +169,8 @@ function App() {
             }
           }}
         />
+      </div>
+      <div style={{ textAlign: 'center' }}>
         <DatePicker
           selected={endDate}
           onChange={(date) => setEndDate(date)}
