@@ -60,6 +60,9 @@ const cg = css`
     background-color: transparent;
     outline: none;
   }
+  .icon:hover {
+    color: red;
+  }
 `;
 
 export { cg, c1, app };

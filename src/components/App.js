@@ -14,6 +14,7 @@ function App() {
   const [notAttendingFilter, setNotAttendingFilter] = useState(false);
   const [attendingChecked, setAttendingChecked] = useState(false);
   const [notAttendingChecked, setNotAttendingChecked] = useState(false);
+  const [editable, setEditable] = useState(false);
 
   async function update(boolean, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
@@ -22,6 +23,17 @@ function App() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ attending: boolean }),
+    });
+    const updatedGuest = await response.json();
+    setClicked(true);
+  }
+  async function updateGuestName(first, last, id) {
+    const response = await fetch(`http://localhost:5000/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ firstName: first, lastName: last }),
     });
     const updatedGuest = await response.json();
     setClicked(true);
@@ -50,6 +62,7 @@ function App() {
       // console.log(allGuests);
       setGuest(allGuests);
       setClicked(false);
+      console.log('Download!');
       // allGuests.forEach((elem) => {
       //   if (elem.attending) {
       //     return document.querySelector(`att${elem.id}`).checked;
@@ -156,7 +169,10 @@ function App() {
           <Guest
             attending={elem.attending}
             firstName={elem.firstName}
+            setFirstName={setFirstName}
             lastName={elem.lastName}
+            setLastName={setLastName}
+            index={index}
             key={elem.id}
             id={elem.id}
             guestaway={guestaway}
@@ -165,6 +181,10 @@ function App() {
             update={update}
             attendingFilter={attendingFilter}
             notAttendingFilter={notAttendingFilter}
+            editable={editable}
+            setEditable={setEditable}
+            updateGuestName={updateGuestName}
+            guest={guest}
           />
         ))}
       </div>
