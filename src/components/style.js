@@ -63,6 +63,11 @@ const cg = css`
   .icon:hover {
     color: red;
   }
+  .text {
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
 `;
 
 export { cg, c1, app };

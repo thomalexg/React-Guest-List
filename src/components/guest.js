@@ -30,6 +30,7 @@ export default function Guest(props) {
           }}
         />
         <input
+          class="text"
           input="text"
           value={props.guest[props.index].firstName}
           onChange={(e) => {
@@ -53,6 +54,7 @@ export default function Guest(props) {
           }}
         />
         <input
+          class="text"
           input="text"
           value={props.guest[props.index].lastName}
           readOnly={true}
