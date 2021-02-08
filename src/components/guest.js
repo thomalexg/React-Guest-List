@@ -1,4 +1,5 @@
 // import Name from './Name';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Guest(props) {
   return (
@@ -81,6 +82,7 @@ export default function Guest(props) {
           setEditable={props.setEditable}
         /> */}
         {/* <p>{`${props.firstName} ${props.lastName}`}</p> */}
+
         <button
           className="icon"
           onClick={() => {

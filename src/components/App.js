@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 // import './App.css';
 import { useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Guest from './Guest';
 import { app, c1, cg } from './style';
 
 function App() {
-  let counter = 1;
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [guest, setGuest] = useState([]);
@@ -15,6 +16,7 @@ function App() {
   const [attendingChecked, setAttendingChecked] = useState(false);
   const [notAttendingChecked, setNotAttendingChecked] = useState(false);
   const [editable, setEditable] = useState(false);
+  const [endDate, setEndDate] = useState(null);
 
   async function update(boolean, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
@@ -44,7 +46,11 @@ function App() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ firstName: firstName, lastName: lastName }),
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        deadline: endDate,
+      }),
     });
     const createdGuest = await response.json();
   }
@@ -74,13 +80,13 @@ function App() {
     }
   }, [clicked]);
 
-  const filterAttending = (boolean) => {
-    guest.forEach((guest) => {
-      if (boolean && !guest.attending) {
-      }
-    });
-  };
-
+  if (endDate !== null) {
+    if (endDate.getTime() < new Date().getTime()) {
+      guest.forEach((elem) => {
+        guestaway(elem.id);
+      });
+    }
+  }
   return (
     <div className="App" css={app} style={{ backgroundColor: 'black' }}>
       <div className="container-header" css={c1}>
@@ -118,7 +124,7 @@ function App() {
             guest.forEach((elem, index) => {
               guestaway(elem.id);
             });
-            setGuest([]);
+            // setGuest([]);
           }}
         >
           Delete All
@@ -163,6 +169,11 @@ function App() {
             }
           }}
         />
+        <DatePicker
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+          dateFormat="dd/MM/yyyy"
+        />
       </div>
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
@@ -185,6 +196,8 @@ function App() {
             setEditable={setEditable}
             updateGuestName={updateGuestName}
             guest={guest}
+            endDate={endDate}
+            setEndDate={setEndDate}
           />
         ))}
       </div>
