@@ -68,6 +68,9 @@ const cg = css`
     border: none;
     outline: none;
   }
+  .yes {
+    background-color: red;
+  }
 `;
 
 export { cg, c1, app };

@@ -29,6 +29,17 @@ function App() {
     // const updatedGuest = await response.json();
     setClicked(true);
   }
+  async function updateGuestDeadline(deadline, id) {
+    const response = await fetch(`http://localhost:5000/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ deadline: deadline }),
+    });
+    // const updatedGuest = await response.json();
+    setClicked(true);
+  }
   async function updateGuestName(first, last, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
       method: 'PATCH',
@@ -193,6 +204,7 @@ function App() {
             guest={guest}
             endDate={endDate}
             setEndDate={setEndDate}
+            updateGuestDeadline={updateGuestDeadline}
           />
         ))}
       </div>
