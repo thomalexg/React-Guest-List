@@ -19,7 +19,6 @@ export default function Guest(props) {
     }
   }
 
-
   return (
     <div
       className={`guest ${props.id} ${overdue} ${props.overdueAll}`}
@@ -29,6 +28,8 @@ export default function Guest(props) {
           !props.attending && props.attendingFilter
             ? 'none'
             : props.attending && props.notAttendingFilter
+            ? 'none'
+            : props.eventName !== '' && props.event !== props.eventName
             ? 'none'
             : '',
       }}

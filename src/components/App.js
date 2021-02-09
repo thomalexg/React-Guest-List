@@ -221,7 +221,11 @@ function App() {
 
       <form action="/action_page.php">
         <label HTMLFor="events">Choose an event:</label>
-        <select id="events" name="events">
+        <select
+          id="events"
+          name="events"
+          onChange={(e) => setEvent(e.target.value)}
+        >
           <option />
           {filterEvents().map((elem, id) => (
             <option key={id} value={elem}>
@@ -230,7 +234,7 @@ function App() {
           ))}
         </select>
       </form>
-
+      <input value={event} key="key" />
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
           <Guest
@@ -240,6 +244,7 @@ function App() {
             setFirstName={setFirstName}
             lastName={elem.lastName}
             setLastName={setLastName}
+            eventName={elem.eventName}
             index={index}
             key={elem.id}
             id={elem.id}
@@ -256,6 +261,7 @@ function App() {
             endDate={endDate}
             setEndDate={setEndDate}
             updateGuestDeadline={updateGuestDeadline}
+            event={event}
           />
         ))}
       </div>
