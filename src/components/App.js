@@ -16,7 +16,23 @@ function App() {
   const [notAttendingChecked, setNotAttendingChecked] = useState(false);
   const [editable, setEditable] = useState(false);
   const [endDate, setEndDate] = useState(null);
+  const [eventName, setEventName] = useState('Event Name');
+  const [eventLocation, setEventLocation] = useState('Event Location');
 
+  function updateEvent(name, location) {
+    guest.forEach(async (elem) => {
+      const response = await fetch(`http://localhost:5000/${elem.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ eventName: name, eventLocation: location }),
+      });
+      // const updatedGuest = await response.json();
+      console.log('Event added');
+      setClicked(true);
+    });
+  }
   async function update(boolean, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
       method: 'PATCH',
@@ -59,7 +75,8 @@ function App() {
       body: JSON.stringify({
         firstName: firstName,
         lastName: lastName,
-        deadlineAll: endDate,
+        eventName: eventName,
+        eventLocation: eventLocation,
       }),
     });
     // const createdGuest = await response.json();
@@ -85,6 +102,21 @@ function App() {
 
   return (
     <div className="App" css={app} style={{ backgroundColor: 'black' }}>
+      <div className="event" style={{ textAlign: 'center' }}>
+        <input
+          type="text"
+          placeholder="Event Name"
+          value={eventName}
+          onChange={(e) => setEventName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Event Location"
+          value={eventLocation}
+          onChange={(e) => setEventLocation(e.target.value)}
+        />{' '}
+        <button>Add Event</button>
+      </div>
       <div className="container-header" css={c1}>
         <div className="header">
           <input
@@ -103,7 +135,8 @@ function App() {
             onClick={async () => {
               setFirstName(firstName ? firstName : ' ');
               setLastName(lastName ? lastName : ' ');
-              await upload(firstName, lastName);
+              await upload();
+              await updateEvent(eventName, eventLocation);
               setClicked(true);
               document.querySelector('.FN').value = '';
               document.querySelector('.LN').value = '';
