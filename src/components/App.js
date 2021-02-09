@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 // import './App.css';
 import { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Guest from './Guest';
 import { app, c1, cg } from './style';
@@ -84,13 +83,6 @@ function App() {
     }
   }, [clicked]);
 
-  if (endDate) {
-    if (endDate.getTime() < new Date().getTime()) {
-      guest.forEach((elem) => {
-        guestaway(elem.id);
-      });
-    }
-  }
   return (
     <div className="App" css={app} style={{ backgroundColor: 'black' }}>
       <div className="container-header" css={c1}>
@@ -174,13 +166,7 @@ function App() {
           }}
         />
       </div>
-      <div style={{ textAlign: 'center' }}>
-        <DatePicker
-          selected={endDate}
-          onChange={(date) => setEndDate(date)}
-          dateFormat="dd/MM/yyyy"
-        />
-      </div>
+
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
           <Guest
@@ -206,8 +192,6 @@ function App() {
             endDate={endDate}
             setEndDate={setEndDate}
             updateGuestDeadline={updateGuestDeadline}
-            // endDateG={endDateG}
-            // setEndDateG={setEndDateG}
           />
         ))}
       </div>
