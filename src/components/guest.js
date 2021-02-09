@@ -1,7 +1,16 @@
 // import Name from './Name';
+import { useState } from 'react';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Guest(props) {
+  const [endDateG, setEndDateG] = useState(null);
+  if (endDateG !== null) {
+    if (endDateG.getTime() < new Date().getTime()) {
+      props.guestaway(props.id);
+    }
+  }
+
   return (
     <div
       className={`guest ${props.id}`}
@@ -91,6 +100,11 @@ export default function Guest(props) {
         >
           <i class="fas fa-trash-alt" />
         </button>
+        <DatePicker
+          selected={endDateG}
+          onChange={(date) => setEndDateG(date)}
+          dateFormat="dd/MM/yyyy"
+        />
       </div>
     </div>
   );
