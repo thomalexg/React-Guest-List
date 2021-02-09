@@ -26,7 +26,7 @@ function App() {
       },
       body: JSON.stringify({ attending: boolean }),
     });
-    const updatedGuest = await response.json();
+    // const updatedGuest = await response.json();
     setClicked(true);
   }
   async function updateGuestName(first, last, id) {
@@ -37,10 +37,10 @@ function App() {
       },
       body: JSON.stringify({ firstName: first, lastName: last }),
     });
-    const updatedGuest = await response.json();
+    // const updatedGuest = await response.json();
     setClicked(true);
   }
-  async function upload(firstName, lastName) {
+  async function upload() {
     const response = await fetch('http://localhost:5000', {
       method: 'POST',
       headers: {
@@ -49,38 +49,31 @@ function App() {
       body: JSON.stringify({
         firstName: firstName,
         lastName: lastName,
-        deadline: endDate,
+        deadlineAll: endDate,
       }),
     });
-    const createdGuest = await response.json();
+    // const createdGuest = await response.json();
   }
   async function guestaway(id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
       method: 'DELETE',
     });
-    const deletedGuest = await response.json();
+    // const deletedGuest = await response.json();
     setClicked(true);
   }
   useEffect(() => {
     const download = async () => {
       const response = await fetch('http://localhost:5000');
       const allGuests = await response.json();
-      // console.log(allGuests);
       setGuest(allGuests);
       setClicked(false);
-      console.log('Download!');
-      // allGuests.forEach((elem) => {
-      //   if (elem.attending) {
-      //     return document.querySelector(`att${elem.id}`).checked;
-      //   }
-      // });
     };
     if (clicked) {
       download();
     }
   }, [clicked]);
 
-  if (endDate !== null) {
+  if (endDate) {
     if (endDate.getTime() < new Date().getTime()) {
       guest.forEach((elem) => {
         guestaway(elem.id);
@@ -121,7 +114,7 @@ function App() {
 
         <button
           onClick={() => {
-            guest.forEach((elem, index) => {
+            guest.forEach((elem) => {
               guestaway(elem.id);
             });
             // setGuest([]);

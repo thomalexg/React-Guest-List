@@ -4,11 +4,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Guest(props) {
-  const [endDateG, setEndDateG] = useState(null);
-  if (endDateG !== null) {
-    if (endDateG.getTime() < new Date().getTime()) {
-      props.guestaway(props.id);
-    }
+  const nowDate = new Date().getTime();
+  const [endDateG, setEndDateG] = useState();
+
+  if (endDateG <= nowDate) {
+    props.guestaway(props.id);
   }
 
   return (
@@ -19,7 +19,7 @@ export default function Guest(props) {
         display:
           !props.attending && props.attendingFilter
             ? 'none'
-            : '' || (props.attending && props.notAttendingFilter)
+            : props.attending && props.notAttendingFilter
             ? 'none'
             : '',
       }}
@@ -102,7 +102,10 @@ export default function Guest(props) {
         </button>
         <DatePicker
           selected={endDateG}
-          onChange={(date) => setEndDateG(date)}
+          onChange={(date) => {
+            setEndDateG(date.getTime());
+            console.log('changed', date.getTime());
+          }}
           dateFormat="dd/MM/yyyy"
         />
       </div>
