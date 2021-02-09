@@ -1,22 +1,21 @@
 // import Name from './Name';
-import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default function Guest(props) {
-  const [endDateG, setEndDateG] = useState();
-  const [overdue, setOverdue] = useState('no');
-
-  if (endDateG <= new Date().getTime()) {
-    // if (!props.attending) {
-    //   setOverdue('yes');
-    // }
-    props.guestaway(props.id);
+  // const [overdue, setOverdue] = useState('no');
+  if (props.endDateG !== '') {
+    if (props.endDateG <= new Date().getTime()) {
+      // if (!props.attending) {
+      //   setOverdue('yes');
+      // }
+      props.guestaway(props.id);
+    }
   }
 
   return (
     <div
-      className={`guest ${props.id} ${overdue}`}
+      className={`guest ${props.id}`}
       id={props.id}
       style={{
         display:
@@ -104,10 +103,10 @@ export default function Guest(props) {
           <i class="fas fa-trash-alt" />
         </button>
         <DatePicker
-          selected={endDateG}
+          selected={props.endDateG}
           onChange={(date) => {
-            setEndDateG(date.getTime());
-            props.updateGuestDeadline(endDateG, props.id);
+            date.getTime();
+            props.updateGuestDeadline(date.getTime(), props.id);
           }}
           dateFormat="dd/MM/yyyy"
         />

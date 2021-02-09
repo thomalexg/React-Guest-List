@@ -184,6 +184,7 @@ function App() {
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
           <Guest
+            endDateG={elem.deadline || ''}
             attending={elem.attending}
             firstName={elem.firstName}
             setFirstName={setFirstName}
@@ -205,6 +206,8 @@ function App() {
             endDate={endDate}
             setEndDate={setEndDate}
             updateGuestDeadline={updateGuestDeadline}
+            // endDateG={endDateG}
+            // setEndDateG={setEndDateG}
           />
         ))}
       </div>
