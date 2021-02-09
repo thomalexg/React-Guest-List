@@ -11,7 +11,7 @@ const c1 = css`
   width: 100%;
   margin: 0 auto;
   position: fixed;
-  top: 30px;
+  top: 60px;
   .header {
     border: 1px solid #fff;
     border-radius: 25px;

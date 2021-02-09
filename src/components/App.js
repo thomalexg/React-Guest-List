@@ -18,21 +18,37 @@ function App() {
   const [endDate, setEndDate] = useState(null);
   const [eventName, setEventName] = useState('Event Name');
   const [eventLocation, setEventLocation] = useState('Event Location');
+  const [event, setEvent] = useState('');
 
-  function updateEvent(name, location) {
-    guest.forEach(async (elem) => {
-      const response = await fetch(`http://localhost:5000/${elem.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ eventName: name, eventLocation: location }),
-      });
-      // const updatedGuest = await response.json();
-      console.log('Event added');
-      setClicked(true);
+  // let arr = [];
+  // for (let g of guest) {
+  //   if (!arr.includes(g.eventName)) {
+  //     arr.push(g.eventname);
+  //   }
+  // }
+  function filterEvents() {
+    const arr = [];
+    guest.forEach((elem) => {
+      if (!arr.includes(elem.eventName)) {
+        arr.push(elem.eventName);
+      }
     });
+    return arr;
   }
+
+  async function updateEvent(name, location, id) {
+    const response = await fetch(`http://localhost:5000/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ eventName: name, eventLocation: location }),
+    });
+    // const updatedGuest = await response.json();
+    console.log('Event added');
+    setClicked(true);
+  }
+
   async function update(boolean, id) {
     const response = await fetch(`http://localhost:5000/${id}`, {
       method: 'PATCH',
@@ -79,6 +95,7 @@ function App() {
         eventLocation: eventLocation,
       }),
     });
+
     // const createdGuest = await response.json();
   }
   async function guestaway(id) {
@@ -93,6 +110,9 @@ function App() {
       const response = await fetch('http://localhost:5000');
       const allGuests = await response.json();
       setGuest(allGuests);
+
+      // updateEvent(eventName, eventLocation, guest[guest.length - 1].id || 0);
+
       setClicked(false);
     };
     if (clicked) {
@@ -114,8 +134,7 @@ function App() {
           placeholder="Event Location"
           value={eventLocation}
           onChange={(e) => setEventLocation(e.target.value)}
-        />{' '}
-        <button>Add Event</button>
+        />
       </div>
       <div className="container-header" css={c1}>
         <div className="header">
@@ -136,8 +155,8 @@ function App() {
               setFirstName(firstName ? firstName : ' ');
               setLastName(lastName ? lastName : ' ');
               await upload();
-              await updateEvent(eventName, eventLocation);
               setClicked(true);
+              // updateEvent(eventName, eventLocation, guest[guest.length - 1].id);
               document.querySelector('.FN').value = '';
               document.querySelector('.LN').value = '';
               setFirstName('');
@@ -199,6 +218,18 @@ function App() {
           }}
         />
       </div>
+
+      <form action="/action_page.php">
+        <label HTMLFor="events">Choose an event:</label>
+        <select id="events" name="events">
+          <option />
+          {filterEvents().map((elem, id) => (
+            <option key={id} value={elem}>
+              {elem}
+            </option>
+          ))}
+        </select>
+      </form>
 
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
