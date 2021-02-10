@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-// import './App.css';
+
 import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import Guest from './Guest';
@@ -20,12 +20,7 @@ function App() {
   const [eventLocation, setEventLocation] = useState('Event Location');
   const [event, setEvent] = useState('');
 
-  // let arr = [];
-  // for (let g of guest) {
-  //   if (!arr.includes(g.eventName)) {
-  //     arr.push(g.eventname);
-  //   }
-  // }
+
   function filterEvents() {
     const arr = [];
     guest.forEach((elem) => {
