@@ -36,54 +36,41 @@ function App() {
     return arr;
   }
 
-  async function updateEvent(name, location, id) {
-    const response = await fetch(`http://localhost:5000/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ eventName: name, eventLocation: location }),
-    });
-    // const updatedGuest = await response.json();
-    console.log('Event added');
-    setClicked(true);
-  }
-
   async function update(boolean, id) {
-    const response = await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`http://localhost:5000/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ attending: boolean }),
     });
-    // const updatedGuest = await response.json();
+
     setClicked(true);
   }
   async function updateGuestDeadline(deadline, id) {
-    const response = await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`http://localhost:5000/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ deadline: deadline }),
     });
-    // const updatedGuest = await response.json();
+
     setClicked(true);
   }
   async function updateGuestName(first, last, id) {
-    const response = await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`http://localhost:5000/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ firstName: first, lastName: last }),
     });
-    // const updatedGuest = await response.json();
+
     setClicked(true);
   }
   async function upload() {
-    const response = await fetch('http://localhost:5000', {
+    await fetch('http://localhost:5000', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -95,14 +82,12 @@ function App() {
         eventLocation: eventLocation,
       }),
     });
-
-    // const createdGuest = await response.json();
   }
   async function guestaway(id) {
-    const response = await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`http://localhost:5000/${id}`, {
       method: 'DELETE',
     });
-    // const deletedGuest = await response.json();
+
     setClicked(true);
   }
   useEffect(() => {
@@ -110,8 +95,6 @@ function App() {
       const response = await fetch('http://localhost:5000');
       const allGuests = await response.json();
       setGuest(allGuests);
-
-      // updateEvent(eventName, eventLocation, guest[guest.length - 1].id || 0);
 
       setClicked(false);
     };
@@ -156,7 +139,6 @@ function App() {
               setLastName(lastName ? lastName : ' ');
               await upload();
               setClicked(true);
-              // updateEvent(eventName, eventLocation, guest[guest.length - 1].id);
               document.querySelector('.FN').value = '';
               document.querySelector('.LN').value = '';
               setFirstName('');
@@ -172,7 +154,6 @@ function App() {
             guest.forEach((elem) => {
               guestaway(elem.id);
             });
-            // setGuest([]);
           }}
         >
           Delete All

@@ -42,10 +42,8 @@ export default function Guest(props) {
           onChange={(e) => {
             if (e.target.checked) {
               props.update(true, props.id);
-              // props.setClicked(true);
             } else {
               props.update(false, props.id);
-              // props.setClicked(true);
             }
           }}
         />
@@ -64,9 +62,6 @@ export default function Guest(props) {
               props.setFirstName('');
               return (e.target.readOnly = false);
             }
-            // else {
-            //   e.target.readOnly = false;
-            // }
           }}
           onBlur={(e) => {
             e.target.readOnly = true;
@@ -94,13 +89,6 @@ export default function Guest(props) {
             props.updateGuestName(props.firstName, props.lastName, props.id);
           }}
         />
-        {/* <Name
-          firstName={props.firstName}
-          lastName={props.lastName}
-          editable={props.editable}
-          setEditable={props.setEditable}
-        /> */}
-        {/* <p>{`${props.firstName} ${props.lastName}`}</p> */}
 
         <button
           className="icon"
