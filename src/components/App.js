@@ -20,7 +20,6 @@ function App() {
   const [eventLocation, setEventLocation] = useState('Event Location');
   const [event, setEvent] = useState('');
 
-
   function filterEvents() {
     const arr = [];
     guest.forEach((elem) => {
