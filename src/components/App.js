@@ -31,7 +31,7 @@ function App() {
   }
 
   async function update(boolean, id) {
-    await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`https://guest-list-api.herokuapp.com/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function App() {
     setClicked(true);
   }
   async function updateGuestDeadline(deadline, id) {
-    await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`https://guest-list-api.herokuapp.com/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function App() {
     setClicked(true);
   }
   async function updateGuestName(first, last, id) {
-    await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`https://guest-list-api.herokuapp.com/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ function App() {
     setClicked(true);
   }
   async function upload() {
-    await fetch('http://localhost:5000', {
+    await fetch('https://guest-list-api.herokuapp.com/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ function App() {
     });
   }
   async function guestaway(id) {
-    await fetch(`http://localhost:5000/${id}`, {
+    await fetch(`https://guest-list-api.herokuapp.com/${id}`, {
       method: 'DELETE',
     });
 
@@ -86,7 +86,7 @@ function App() {
   }
   useEffect(() => {
     const download = async () => {
-      const response = await fetch('http://localhost:5000');
+      const response = await fetch('https://guest-list-api.herokuapp.com/');
       const allGuests = await response.json();
       setGuest(allGuests);
 
@@ -209,7 +209,7 @@ function App() {
           ))}
         </select>
       </form>
-      <input value={event} key="key" />
+      {/* <input value={event} key="key" /> */}
       <div className="guestCon" css={cg}>
         {guest.map((elem, index) => (
           <Guest
