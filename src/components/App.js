@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import Guest from './Guest2';
+import Guest from './Guest';
 import { app, c1, cg } from './style';
 
 function App() {
