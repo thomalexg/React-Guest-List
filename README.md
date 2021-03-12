@@ -1,3 +1,25 @@
+# React Guest List
+
+This Guest List is connected to the guest list Api: 
+https://github.com/thomalexg/guest_list_api
+
+# Usage
+
+1. Add an Event name and location. if you don´t add one the Guestlist get named by the placeholders.
+2. Type in first and last name
+3. click Add Guest
+4. You won't see anything until you go to the Dropdown on the left of the page and select an event name
+5. Now you can see all the Guests who for the event.
+
+# Functions
+
+- On double click on the name of a guest you can change the name.
+- By clicking on the checkbox you can change the state of the Guest from not attending to attending or the other way around
+- By clicking on the white Box in the Guest item you can set a date, if the date is expired and the guest is not attending, the background will be highlighted red. You can check this functionality by setting the date to a date in the past
+- By clicking on the delete icon you can delete a single guest
+- Above the guest list you can filter for attending or not attending only
+- withe the Delete all button you will delete all guests and all events
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
